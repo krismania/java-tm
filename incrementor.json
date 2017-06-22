@@ -1,0 +1,18 @@
+{
+	"name": "Incrementor",
+	"description": "Increments a binary input by 1",
+	"author": "Kristian Giglia",
+	"machine": {
+		"empty": "ϵ",
+		"initialState": "init",
+		"finalStates": [ "done" ],
+		"transitions": [
+			{"stateIn": "init", "stateOut": "init", "read": "0", "write": "0", "move": "R"},
+			{"stateIn": "init", "stateOut": "init", "read": "1", "write": "1", "move": "R"},
+			{"stateIn": "init", "stateOut": "inc", "read": "ϵ", "write": "ϵ", "move": "L"},
+			{"stateIn": "inc", "stateOut": "inc", "read": "1", "write": "0", "move": "L"},
+			{"stateIn": "inc", "stateOut": "done", "read": "0", "write": "1", "move": "R"},
+			{"stateIn": "inc", "stateOut": "done", "read": "ϵ", "write": "1", "move": "R"}
+		]
+	}
+}
