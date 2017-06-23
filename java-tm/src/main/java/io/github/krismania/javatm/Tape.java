@@ -7,17 +7,28 @@ import java.util.Stack;
  */
 class Tape
 {
-	private final char empty;
-	
 	private Stack<Character> left;
 	private char current;
 	private Stack<Character> right;
+	
+	private final char empty; // the tape's blank symbol
 	
 	public Tape(String contents, char empty)
 	{
 		this.empty = empty;
 		
-		// TODO: Copy contents to tape
+		// put a blank char on the ends of the tape
+		left.push(empty);
+		right.push(empty);
+		// also set current symbol to blank
+		current = empty;
+		
+		// reverse contents string (it will be pushed into last-first) and split
+		// it into a character array.
+		char[] contentsArray = new StringBuilder(contents).reverse().toString().toCharArray();
+		
+		// push characters to the right stack to fill the tape
+		for (char c : contentsArray) { right.push(c); }
 	}
 	
 	/**
