@@ -23,15 +23,16 @@ class Tape
 		left = new Stack<Character>();
 		right = new Stack<Character>();
 		
-		// set current symbol to blank
-		current = empty;
-		
 		// reverse contents string (it will be pushed into last-first) and split
-		// it into a character array.
-		char[] contentsArray = new StringBuilder(contents).reverse().toString().toCharArray();
+		// it into a character array. First character of contents is excluded (this
+		// becomes the current symbol)
+		char[] contentsArray = new StringBuilder(contents.substring(1)).reverse().toString().toCharArray();
 		
 		// push characters to the right stack to fill the tape
 		for (char c : contentsArray) { right.push(c); }
+		
+		// copy the first contents char into the current position
+		current = contents.charAt(0);
 	}
 	
 	/**
@@ -52,7 +53,31 @@ class Tape
 	 */
 	public void move(Direction d)
 	{
-		// TODO: Move the tape
+		switch (d)
+		{
+			case LEFT:
+				right.push(current);
+				if (left.empty())
+				{
+					current = empty;
+				}
+				else
+				{
+					current = left.pop();
+				}
+				break;
+			case RIGHT:
+				left.push(current);
+				if (right.empty())
+				{
+					current = empty;
+				}
+				else
+				{
+					current = right.pop();
+				}
+				break;
+		}
 	}
 	
 	@Override

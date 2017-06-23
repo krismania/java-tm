@@ -54,13 +54,16 @@ class Machine
 			// execute the transition
 			tape.write(t.write);
 			tape.move(t.move);
+			
+			// update machine state
+			currentState = t.stateOut;
 		}
 		else
 		{
 			halt = true;
 		}
 		
-		System.out.println(tape);
+		System.out.println(currentState + " // " + tape);
 	}
 	
 	/**
