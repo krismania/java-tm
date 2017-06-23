@@ -1,5 +1,7 @@
 package io.github.krismania.javatm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 /**
@@ -17,10 +19,11 @@ class Tape
 	{
 		this.empty = empty;
 		
-		// put a blank char on the ends of the tape
-		left.push(empty);
-		right.push(empty);
-		// also set current symbol to blank
+		// init stacks
+		left = new Stack<Character>();
+		right = new Stack<Character>();
+		
+		// set current symbol to blank
 		current = empty;
 		
 		// reverse contents string (it will be pushed into last-first) and split
@@ -55,7 +58,40 @@ class Tape
 	@Override
 	public String toString()
 	{
-		// TODO: Print contents of tape
-		return "Tape";
+		ArrayList<Character> leftArray = new ArrayList<Character>(left);
+		ArrayList<Character> rightArray = new ArrayList<Character>(right);
+		
+		Collections.reverse(rightArray);
+		// required as the bottom of the stack (the leftmost char) will be at the
+		// end of the ArrayList.
+		
+		// join the two arrays together with the current symbol in between.
+		// also adds a blank symbol to either end.
+		ArrayList<Character> outputArray = new ArrayList<Character>();
+		outputArray.add(empty);
+		outputArray.addAll(leftArray);
+		outputArray.add(current);
+		outputArray.addAll(rightArray);
+		outputArray.add(empty);
+		
+		// build output from the new array
+		StringBuilder output = new StringBuilder("|");
+		
+		for (int i = 0; i < outputArray.size(); i++)
+		{
+			// check if this is the currently scanned symbol
+			if (i == (leftArray.size() + 1))
+			{
+				// if it is, add brackets to output to signify
+				output.append("[" + outputArray.get(i) + "]|");
+			}
+			else
+			{
+				// else output regularly
+				output.append(" " + outputArray.get(i) + " |");
+			}
+		}
+		
+		return output.toString();
 	}
 }
