@@ -5,9 +5,18 @@ package io.github.krismania.javatm;
  */
 class Transition
 {
-	private String stateIn, stateOut;
-	private char read, write;
-	private Direction move;
+	public final String stateIn, stateOut;
+	public final char read, write;
+	public final Direction move;
+	
+	public Transition(String stateIn, char read, String stateOut, char write, Direction move)
+	{
+		this.stateIn = stateIn;
+		this.read = read;
+		this.stateOut = stateOut;
+		this.write = write;
+		this.move = move;
+	}
 	
 	@Override
 	public String toString()

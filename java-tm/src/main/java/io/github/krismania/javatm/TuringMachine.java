@@ -8,9 +8,14 @@ public class TuringMachine
 	private String name, description, author;
 	private Machine machine;
 
+	public void initTape(String contents)
+	{
+		machine.initTape(contents);
+	}
+	
 	public void execute()
 	{
-		// TODO: Machine execution
+		machine.execute();
 	}
 	
 	@Override

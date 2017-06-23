@@ -12,8 +12,14 @@ public class App
     	FileReader fr = new FileReader(new File("../incrementor.json"));
         Gson gson = new Gson();
         
-        TuringMachine tm = gson.fromJson(fr, TuringMachine.class);
-                
+        // load TM from json
+        TuringMachine tm = gson.fromJson(fr, TuringMachine.class);     
         System.out.println(tm);
+        
+        // initialize the tape
+        tm.initTape("10100111");
+        
+        // execute machine
+        tm.execute();
     }
 }

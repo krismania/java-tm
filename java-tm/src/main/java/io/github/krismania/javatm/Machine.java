@@ -14,6 +14,9 @@ class Machine
 	private ArrayList<Transition> transitions;
 	private Tape tape;
 	
+	private String currentState; // stores the current state of execution
+	private boolean halt; // set to true once the machine cannot transition
+	
 	public void initTape(String contents)
 	{
 		tape = new Tape(contents, empty);
@@ -22,6 +25,70 @@ class Machine
 	public Tape getTape()
 	{
 		return tape;
+	}
+	
+	public void execute()
+	{
+		// set current state to the initial state
+		setState(initialState);
+		// reset halt flag
+		halt = false;
+		
+		// execute until halting
+		System.out.println(tape);
+		while (!halt)
+		{
+			executeStep();
+		}
+	}
+	
+	/**
+	 * Executes a single step in the machine's computation by writing to and 
+	 * moving the tape based on it's contents and the current state
+	 */
+	private void executeStep()
+	{
+		Transition t = getTransition(currentState, tape.scan());
+		if (t != null)
+		{
+			// execute the transition
+			tape.write(t.write);
+			tape.move(t.move);
+		}
+		else
+		{
+			halt = true;
+		}
+		
+		System.out.println(tape);
+	}
+	
+	/**
+	 * Sets the current state of the machine to the given state
+	 */
+	private void setState(String state)
+	{
+		currentState = state;
+	}
+	
+	/**
+	 * Returns the transition applicable to the given state and tape symbol,
+	 * or null if there is none.
+	 * TODO: Only returns 1 transition, meaning non-deterministic machines
+	 * cannot be correctly simulated
+	 */
+	private Transition getTransition(String state, char input)
+	{
+		// search through the transitions
+		for (Transition t : transitions)
+		{
+			// if stateIn matches & input match, return this state
+			if (t.stateIn.equals(state) && t.read == input)
+			{
+				return t;
+			}
+		}
+		return null; // no transition found
 	}
 	
 	@Override
