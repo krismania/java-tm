@@ -35,10 +35,11 @@ class Machine
 		halt = false;
 		
 		// execute until halting
-		System.out.println(tape);
+		printState();
 		while (!halt)
 		{
 			executeStep();
+			printState();
 		}
 	}
 	
@@ -62,8 +63,6 @@ class Machine
 		{
 			halt = true;
 		}
-		
-		System.out.println(currentState + " // " + tape);
 	}
 	
 	/**
@@ -92,6 +91,15 @@ class Machine
 			}
 		}
 		return null; // no transition found
+	}
+	
+	/**
+	 * User-friendly print of the machine's current state
+	 */
+	public void printState()
+	{
+		String format = "State: %s, halted: %b \ntape: %s\n";
+		System.out.println(String.format(format, currentState, halt, tape.toString()));
 	}
 	
 	@Override
